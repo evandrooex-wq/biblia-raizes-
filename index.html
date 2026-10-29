@@ -5,224 +5,141 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#10243a">
-<meta name="description" content="Bíblia Raízes: leitura e estudo das Escrituras.">
+<meta name="description" content="Bíblia Raízes: leitura, favoritos e anotações bíblicas.">
 <title>Bíblia Raízes</title>
 
 <style>
 :root {
   --azul: #10243a;
-  --azul-claro: #1b344e;
+  --azul2: #1b344e;
   --dourado: #d5b56d;
   --fundo: #f4f6f8;
   --texto: #243447;
-  --leitura: 19px;
+  --borda: #dce2e9;
 }
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 12px;
-}
-
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Arial, sans-serif;
   background: var(--fundo);
   color: var(--texto);
   line-height: 1.7;
 }
-
 header {
   background: var(--azul);
   color: white;
-  padding: 26px 16px;
+  padding: 25px 16px;
   text-align: center;
 }
-
 header h1 {
   margin: 0;
   color: var(--dourado);
   letter-spacing: 2px;
-  font-size: clamp(24px, 6vw, 34px);
 }
-
-header p {
-  margin-bottom: 0;
-}
-
+header p { margin-bottom: 0; }
 nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 5px;
-  background: var(--azul-claro);
+  gap: 6px;
+  background: var(--azul2);
   padding: 10px;
 }
-
 nav a {
   color: white;
   text-decoration: none;
-  padding: 9px 12px;
-  border-radius: 7px;
+  padding: 8px 10px;
+  border-radius: 6px;
 }
-
-nav a:focus-visible,
-button:focus-visible,
-select:focus-visible {
-  outline: 3px solid var(--dourado);
-  outline-offset: 3px;
-}
-
+nav a:hover { background: #34516d; }
 main {
-  width: 100%;
   max-width: 900px;
   margin: auto;
   padding: 16px;
 }
-
-.hero,
-.card {
+.card, .hero {
   background: white;
-  padding: clamp(16px, 4vw, 24px);
+  padding: 20px;
   border-radius: 14px;
   margin-bottom: 18px;
   box-shadow: 0 3px 12px #10243a0c;
 }
-
-.hero {
-  border-top: 4px solid var(--dourado);
-}
-
-h2,
-h3 {
-  color: var(--azul);
-  line-height: 1.35;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-  gap: 14px;
-}
-
+.hero { border-top: 4px solid var(--dourado); }
+h2, h3 { color: var(--azul); line-height: 1.3; }
 label {
   display: block;
   font-weight: bold;
-  margin-top: 8px;
+  margin-top: 10px;
 }
-
-select,
-button {
+input, select, textarea, button {
   width: 100%;
-  min-height: 48px;
   padding: 12px;
   margin: 6px 0 12px;
-  border: 1px solid #ccd3dc;
-  border-radius: 9px;
+  border: 1px solid var(--borda);
+  border-radius: 8px;
   font-size: 16px;
   font-family: inherit;
 }
-
-select {
-  background: white;
-  color: var(--texto);
+textarea {
+  min-height: 110px;
+  resize: vertical;
 }
-
 button {
   background: var(--azul);
   color: white;
   border: 0;
   cursor: pointer;
   font-weight: bold;
-  touch-action: manipulation;
 }
-
-button:hover {
-  background: #234462;
+button:focus, select:focus, textarea:focus {
+  outline: 3px solid #d5b56d88;
+  outline-offset: 2px;
 }
-
-button:disabled {
-  opacity: .5;
-  cursor: not-allowed;
-}
-
-.botao-secundario {
+button:disabled { opacity: .55; cursor: wait; }
+button.secundario {
   background: #e9eef3;
   color: var(--azul);
-  border: 1px solid #ccd3dc;
+  border: 1px solid var(--borda);
 }
-
-.botao-secundario:hover {
-  background: #dce5ed;
-}
-
-.controles-leitura {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+button.destaque { background: #80611d; }
+button.excluir { background: #8b3030; }
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
   gap: 8px;
-  margin: 12px 0 18px;
 }
-
+.botoes button { flex: 1 1 130px; }
+.controles-leitura {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: #f5f7f9;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 12px 0;
+}
 .controles-leitura button {
-  margin: 0;
-  padding: 10px 5px;
-}
-
-.tamanho-letra {
-  text-align: center;
-  font-size: 14px;
-  color: #526171;
-  margin: 8px 0 16px;
-}
-
-.navegacao-capitulo {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.navegacao-capitulo button {
+  width: auto;
+  min-width: 48px;
   margin: 0;
 }
-
-#passagem {
-  background: #fff;
-  border: 1px solid #e3e8ed;
-  border-radius: 12px;
-  padding: clamp(14px, 4vw, 24px);
+#tamanhoAtual { font-size: 14px; }
+#textoBiblico {
+  font-size: 20px;
   overflow-wrap: anywhere;
 }
-
-#passagem h3 {
-  margin-top: 0;
-  font-size: 1.35em;
-  border-bottom: 2px solid var(--dourado);
-  padding-bottom: 12px;
-}
-
-.texto-biblico {
-  font-size: var(--leitura);
-  line-height: 1.95;
-  letter-spacing: .01em;
-}
-
 .versiculo {
-  margin: 0 0 14px;
-  padding: 0 0 12px;
-  border-bottom: 1px solid #edf0f3;
+  padding: 9px 0;
+  margin: 0;
+  border-bottom: 1px solid #e9edf1;
 }
-
 .numero {
-  color: #87661f;
-  font-size: .83em;
+  color: #80611d;
   margin-right: 5px;
-  vertical-align: super;
 }
-
 .notice {
   background: #fff8e8;
   border-left: 4px solid var(--dourado);
@@ -230,43 +147,37 @@ button:disabled {
   border-radius: 5px;
   overflow-wrap: anywhere;
 }
-
-.status {
-  color: #526171;
-  font-size: 15px;
+.item-salvo {
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 14px;
+  margin: 12px 0;
+  background: #fff;
 }
-
+.item-salvo h3 { margin-top: 0; }
+.item-salvo p { overflow-wrap: anywhere; }
+.etiqueta {
+  display: inline-block;
+  background: #f5edda;
+  color: #644c19;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 13px;
+  margin: 0 5px 5px 0;
+}
+.vazio { color: #667586; font-style: italic; }
 footer {
   background: var(--azul);
   color: white;
-  padding: 22px 16px;
+  padding: 22px;
   text-align: center;
   font-size: 14px;
 }
-
-@media (max-width: 420px) {
-  main {
-    padding: 10px;
-  }
-
-  .hero,
-  .card {
-    padding: 16px;
-  }
-
-  .controles-leitura {
-    gap: 6px;
-  }
-
-  .controles-leitura button {
-    font-size: 14px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+@media (max-width: 480px) {
+  main { padding: 10px; }
+  .card, .hero { padding: 15px; }
+  header { padding: 22px 12px; }
+  #textoBiblico { line-height: 1.9; }
 }
 </style>
 </head>
@@ -277,23 +188,24 @@ footer {
   <p>A Palavra em suas raízes. O sentido em sua essência.</p>
 </header>
 
-<nav aria-label="Navegação principal">
+<nav>
   <a href="#inicio">Início</a>
   <a href="#leitor">Leitor</a>
-  <a href="#estudo">Estudo bíblico</a>
-  <a href="#projeto">O projeto</a>
+  <a href="#anotacoes">Anotações</a>
+  <a href="#favoritos">Favoritos</a>
+  <a href="#projeto">Projeto</a>
 </nav>
 
 <main>
   <section class="hero" id="inicio">
-    <h2>Conheça as Escrituras em profundidade</h2>
-    <p>Leia, pesquise e estude as passagens bíblicas com atenção ao contexto e às fontes.</p>
+    <h2>Leia, medite e estude as Escrituras</h2>
+    <p>Consulte passagens bíblicas, guarde seus favoritos e registre suas observações pessoais.</p>
     <button id="irLeitor" type="button">Abrir leitor bíblico</button>
   </section>
 
   <section class="card" id="leitor">
     <h2>Leitor bíblico</h2>
-    <p>Escolha um livro e um capítulo para começar sua leitura.</p>
+    <p>Escolha o livro e o capítulo que deseja ler.</p>
 
     <label for="livro">Livro</label>
     <select id="livro"></select>
@@ -303,61 +215,62 @@ footer {
 
     <button id="abrir" type="button">Abrir passagem</button>
 
-    <div class="controles-leitura" aria-label="Ajustar tamanho do texto">
-      <button id="diminuirLetra" class="botao-secundario"
-        type="button" aria-label="Diminuir tamanho da letra">A− Menor</button>
-      <button id="restaurarLetra" class="botao-secundario"
-        type="button">A Restaurar</button>
-      <button id="aumentarLetra" class="botao-secundario"
-        type="button" aria-label="Aumentar tamanho da letra">A+ Maior</button>
+    <div class="botoes">
+      <button id="anterior" class="secundario" type="button">← Anterior</button>
+      <button id="proximo" class="secundario" type="button">Próximo →</button>
     </div>
 
-    <p id="indicadorLetra" class="tamanho-letra" aria-live="polite">
-      Tamanho da letra: 19 px
-    </p>
-
-    <div id="passagem" aria-live="polite" aria-busy="false">
-      <p>Selecione um livro e um capítulo para começar.</p>
+    <div class="controles-leitura">
+      <span><strong>Tamanho da letra</strong></span>
+      <div class="botoes" style="flex:0 1 auto">
+        <button id="diminuirLetra" class="secundario" type="button" aria-label="Diminuir letra">A−</button>
+        <button id="aumentarLetra" class="secundario" type="button" aria-label="Aumentar letra">A+</button>
+        <button id="resetLetra" class="secundario" type="button">Normal</button>
+      </div>
+      <span id="tamanhoAtual">20 px</span>
     </div>
 
-    <div class="navegacao-capitulo">
-      <button id="anterior" class="botao-secundario"
-        type="button" disabled>← Capítulo anterior</button>
-      <button id="proximo" type="button" disabled>Próximo capítulo →</button>
+    <div class="botoes">
+      <button id="favoritar" class="destaque" type="button">☆ Adicionar aos favoritos</button>
     </div>
+
+    <h3 id="tituloPassagem">Sua leitura</h3>
+    <div id="textoBiblico" aria-live="polite">
+      Selecione um livro e um capítulo e toque em “Abrir passagem”.
+    </div>
+
+    <p id="creditoFonte" class="notice" hidden></p>
   </section>
 
-  <section class="grid" id="estudo">
-    <article class="card">
-      <h3>Idiomas originais</h3>
-      <p>Explore o hebraico, o aramaico e o grego koiné com fontes identificadas.</p>
-    </article>
-    <article class="card">
-      <h3>Dicionário bíblico</h3>
-      <p>Consulte palavras, significados e informações gramaticais.</p>
-    </article>
-    <article class="card">
-      <h3>Cruzamentos bíblicos</h3>
-      <p>Descubra conexões entre passagens do Antigo e do Novo Testamento.</p>
-    </article>
-    <article class="card">
-      <h3>Contexto e estudo</h3>
-      <p>Estude contexto histórico, literário e diferentes interpretações.</p>
-    </article>
+  <section class="card" id="anotacoes">
+    <h2>Minhas anotações</h2>
+    <p>Registre uma reflexão, uma dúvida ou o que você aprendeu na passagem selecionada.</p>
+
+    <label for="nota">Anotação pessoal</label>
+    <textarea id="nota" maxlength="10000" placeholder="Escreva aqui sua reflexão..."></textarea>
+    <button id="salvarNota" type="button">Salvar anotação</button>
+    <p id="mensagemNota" aria-live="polite"></p>
+  </section>
+
+  <section class="card" id="favoritos">
+    <h2>Favoritos e anotações salvas</h2>
+    <p>Consulte suas passagens salvas, abra um capítulo ou exclua um item.</p>
+    <button id="atualizarSalvos" class="secundario" type="button">Atualizar lista</button>
+    <div id="listaSalvos" aria-live="polite"></div>
   </section>
 
   <section class="card" id="projeto">
     <h2>Sobre o Bíblia Raízes</h2>
-    <p>Um projeto para estudar a Bíblia com responsabilidade, transparência e respeito às fontes.</p>
+    <p>Um projeto de leitura e estudo bíblico com recursos para organizar suas leituras e reflexões.</p>
     <div class="notice">
-      O leitor consulta uma fonte externa. A disponibilidade da API e a licença dos textos precisam ser confirmadas.
+      Favoritos e anotações ficam armazenados neste navegador e neste aparelho. Eles podem ser perdidos se os dados do navegador forem apagados.
     </div>
   </section>
 </main>
 
 <footer>
   <p>Bíblia Raízes · Projeto em desenvolvimento</p>
-  <p>Fontes, licenças e créditos devem ser confirmados antes da publicação completa.</p>
+  <p>Fonte de leitura: API Midvash — Almeida Livre. Verifique os créditos e as condições de uso da tradução.</p>
 </footer>
 
 <script>
@@ -401,18 +314,60 @@ const livros = [
 ["Apocalipse",22,"revelation"]
 ];
 
-const seletorLivro = document.getElementById("livro");
-const seletorCapitulo = document.getElementById("capitulo");
-const passagem = document.getElementById("passagem");
-const botaoAbrir = document.getElementById("abrir");
-const botaoAnterior = document.getElementById("anterior");
-const botaoProximo = document.getElementById("proximo");
+const $ = id => document.getElementById(id);
+const seletorLivro = $("livro");
+const seletorCapitulo = $("capitulo");
+const textoBiblico = $("textoBiblico");
+const tituloPassagem = $("tituloPassagem");
+const botaoAbrir = $("abrir");
+const nota = $("nota");
+const mensagemNota = $("mensagemNota");
+const listaSalvos = $("listaSalvos");
 
-const TAMANHO_PADRAO = 19;
-const TAMANHO_MINIMO = 14;
-const TAMANHO_MAXIMO = 30;
-let tamanhoLetra = TAMANHO_PADRAO;
-let pedidoAtual = 0;
+const CHAVE_SALVOS = "bibliaRaizesSalvosV1";
+const CHAVE_LETRA = "bibliaRaizesTamanhoLetraV1";
+
+let passagemCarregada = false;
+let carregamentoId = 0;
+let tamanhoLetra = 20;
+
+function lerSalvos() {
+  try {
+    const dados = JSON.parse(localStorage.getItem(CHAVE_SALVOS) || "[]");
+    return Array.isArray(dados) ? dados : [];
+  } catch (erro) {
+    return [];
+  }
+}
+
+function gravarSalvos(itens) {
+  try {
+    localStorage.setItem(CHAVE_SALVOS, JSON.stringify(itens));
+    return true;
+  } catch (erro) {
+    alert("Não foi possível salvar. Verifique o espaço disponível e as permissões do navegador.");
+    return false;
+  }
+}
+
+function chavePassagem(slug, capitulo) {
+  return slug + ":" + capitulo;
+}
+
+function passagemAtual() {
+  const item = livros[Number(seletorLivro.value)];
+  return {
+    book: item[0],
+    slug: item[2],
+    chapter: Number(seletorCapitulo.value),
+    key: chavePassagem(item[2], Number(seletorCapitulo.value))
+  };
+}
+
+function obterItemAtual() {
+  const atual = passagemAtual();
+  return lerSalvos().find(item => item.key === atual.key) || null;
+}
 
 livros.forEach((item, indice) => {
   const opcao = document.createElement("option");
@@ -422,86 +377,96 @@ livros.forEach((item, indice) => {
 });
 
 function atualizarCapitulos() {
-  const indice = Number(seletorLivro.value);
-  const total = livros[indice][1];
-  const capituloAnteriorSelecionado = Number(seletorCapitulo.value) || 1;
-
   seletorCapitulo.replaceChildren();
+  const item = livros[Number(seletorLivro.value)];
 
-  for (let n = 1; n <= total; n++) {
+  for (let n = 1; n <= item[1]; n++) {
     const opcao = document.createElement("option");
     opcao.value = String(n);
     opcao.textContent = "Capítulo " + n;
     seletorCapitulo.appendChild(opcao);
   }
-
-  seletorCapitulo.value = String(
-    Math.min(capituloAnteriorSelecionado, total)
-  );
-  atualizarBotoesNavegacao();
+  atualizarEstadoSalvos();
 }
 
-function atualizarBotoesNavegacao() {
-  const indice = Number(seletorLivro.value);
-  const numero = Number(seletorCapitulo.value);
-
-  botaoAnterior.disabled = indice === 0 && numero === 1;
-  botaoProximo.disabled =
-    indice === livros.length - 1 &&
-    numero === livros[livros.length - 1][1];
+function aplicarTamanhoLetra() {
+  textoBiblico.style.fontSize = tamanhoLetra + "px";
+  $("tamanhoAtual").textContent = tamanhoLetra + " px";
+  try {
+    localStorage.setItem(CHAVE_LETRA, String(tamanhoLetra));
+  } catch (erro) {}
 }
 
-function atualizarTamanhoLetra() {
-  document.documentElement.style.setProperty(
-    "--leitura", tamanhoLetra + "px"
-  );
+try {
+  const salvo = Number(localStorage.getItem(CHAVE_LETRA));
+  if (salvo >= 15 && salvo <= 32) tamanhoLetra = salvo;
+} catch (erro) {}
 
-  document.getElementById("indicadorLetra").textContent =
-    "Tamanho da letra: " + tamanhoLetra + " px";
+$("aumentarLetra").addEventListener("click", () => {
+  tamanhoLetra = Math.min(32, tamanhoLetra + 2);
+  aplicarTamanhoLetra();
+});
+$("diminuirLetra").addEventListener("click", () => {
+  tamanhoLetra = Math.max(15, tamanhoLetra - 2);
+  aplicarTamanhoLetra();
+});
+$("resetLetra").addEventListener("click", () => {
+  tamanhoLetra = 20;
+  aplicarTamanhoLetra();
+});
+aplicarTamanhoLetra();
 
-  document.getElementById("diminuirLetra").disabled =
-    tamanhoLetra <= TAMANHO_MINIMO;
-  document.getElementById("aumentarLetra").disabled =
-    tamanhoLetra >= TAMANHO_MAXIMO;
+function atualizarEstadoSalvos() {
+  const item = obterItemAtual();
+  $("favoritar").textContent = item && item.favorite
+    ? "★ Remover dos favoritos"
+    : "☆ Adicionar aos favoritos";
+  nota.value = item ? item.note || "" : "";
+  mensagemNota.textContent = "";
 }
 
-function mostrarMensagem(mensagem, classe = "status") {
-  passagem.replaceChildren();
-  const p = document.createElement("p");
-  p.className = classe;
-  p.textContent = mensagem;
-  passagem.appendChild(p);
-}
+seletorLivro.addEventListener("change", () => {
+  atualizarCapitulos();
+  passagemCarregada = false;
+  textoBiblico.textContent = "Selecione um capítulo e toque em “Abrir passagem”.";
+  $("creditoFonte").hidden = true;
+  atualizarEstadoSalvos();
+});
 
-function adicionarVersiculo(numero, texto, container) {
+seletorCapitulo.addEventListener("change", () => {
+  passagemCarregada = false;
+  textoBiblico.textContent = "Toque em “Abrir passagem” para carregar este capítulo.";
+  $("creditoFonte").hidden = true;
+  atualizarEstadoSalvos();
+});
+
+$("irLeitor").addEventListener("click", () => {
+  $("leitor").scrollIntoView({ behavior: "smooth" });
+});
+
+function adicionarVersiculo(numero, texto) {
   if (texto === undefined || texto === null || texto === "") return;
 
-  const paragrafo = document.createElement("p");
-  paragrafo.className = "versiculo";
+  const p = document.createElement("p");
+  p.className = "versiculo";
 
-  const numeroElemento = document.createElement("strong");
-  numeroElemento.className = "numero";
-  numeroElemento.textContent = String(numero);
+  const n = document.createElement("strong");
+  n.className = "numero";
+  n.textContent = numero + ".";
 
-  paragrafo.append(
-    numeroElemento,
-    document.createTextNode(" " + String(texto))
-  );
-  container.appendChild(paragrafo);
+  p.append(n, document.createTextNode(" " + String(texto)));
+  textoBiblico.appendChild(p);
 }
 
-function exibirTexto(dados, container) {
+function exibirTexto(dados) {
   if (Array.isArray(dados)) {
-    dados.forEach((versiculo, indice) => {
-      if (typeof versiculo === "string") {
-        adicionarVersiculo(indice + 1, versiculo, container);
-      } else if (versiculo && typeof versiculo === "object") {
+    dados.forEach((v, i) => {
+      if (typeof v === "string") {
+        adicionarVersiculo(i + 1, v);
+      } else if (v && typeof v === "object") {
         adicionarVersiculo(
-          versiculo.verse ?? versiculo.verse_number ??
-          versiculo.number ?? indice + 1,
-          versiculo.text ?? versiculo.content ??
-          versiculo.verse_text ?? "",
-          container
+          v.verse ?? v.verse_number ?? v.number ?? i + 1,
+          v.text ?? v.content ?? v.verse_text ?? ""
         );
       }
     });
@@ -513,43 +478,46 @@ function exibirTexto(dados, container) {
   }
 
   if (Array.isArray(dados.verses)) {
-    exibirTexto(dados.verses, container);
+    exibirTexto(dados.verses);
     return;
   }
 
   if (Array.isArray(dados.data)) {
-    exibirTexto(dados.data, container);
+    exibirTexto(dados.data);
     return;
   }
 
   if (dados.verse && dados.text) {
-    adicionarVersiculo(dados.verse, dados.text, container);
+    adicionarVersiculo(dados.verse, dados.text);
     return;
   }
 
   if (dados.text || dados.content || dados.verse_text) {
     adicionarVersiculo(
       dados.verse ?? dados.verse_number ?? 1,
-      dados.text ?? dados.content ?? dados.verse_text,
-      container
+      dados.text ?? dados.content ?? dados.verse_text
     );
     return;
   }
 
-  throw new Error("Nenhum versículo foi recebido em formato reconhecido.");
+  throw new Error("Nenhum versículo reconhecido na resposta.");
 }
 
 async function carregarPassagem() {
-  const pedido = ++pedidoAtual;
-  const indice = Number(seletorLivro.value);
+  const id = ++carregamentoId;
+  const item = livros[Number(seletorLivro.value)];
   const numero = Number(seletorCapitulo.value);
-  const item = livros[indice];
 
+  passagemCarregada = false;
   botaoAbrir.disabled = true;
-  botaoAnterior.disabled = true;
-  botaoProximo.disabled = true;
-  passagem.setAttribute("aria-busy", "true");
-  mostrarMensagem("Carregando " + item[0] + " " + numero + "...");
+  textoBiblico.replaceChildren();
+
+  const carregando = document.createElement("p");
+  carregando.textContent = "Carregando passagem...";
+  textoBiblico.appendChild(carregando);
+
+  tituloPassagem.textContent = item[0] + " " + numero;
+  $("creditoFonte").hidden = true;
 
   try {
     const url = "https://api.midvash.com/v1/almeida-livre/"
@@ -558,128 +526,220 @@ async function carregarPassagem() {
     const resposta = await fetch(url);
 
     if (!resposta.ok) {
-      throw new Error("Erro HTTP " + resposta.status + ".");
+      throw new Error("Erro HTTP " + resposta.status);
     }
 
     const resultado = await resposta.json();
-
-    if (pedido !== pedidoAtual) return;
-
     const dados = resultado.data ?? resultado;
-    const titulo = document.createElement("h3");
-    titulo.textContent = item[0] + " " + numero;
 
-    const conteudo = document.createElement("div");
-    conteudo.className = "texto-biblico";
-    conteudo.appendChild(titulo);
+    if (id !== carregamentoId) return;
 
-    const versiculos = document.createElement("div");
-    exibirTexto(dados, versiculos);
+    textoBiblico.replaceChildren();
+    exibirTexto(dados);
 
-    if (!versiculos.querySelector(".versiculo")) {
-      throw new Error("A resposta não contém versículos para mostrar.");
+    if (textoBiblico.querySelectorAll(".versiculo").length === 0) {
+      throw new Error("Nenhum versículo foi recebido.");
     }
 
-    conteudo.appendChild(versiculos);
-
-    const credito = document.createElement("p");
-    credito.className = "notice";
-    credito.textContent =
-      "Fonte consultada: API Midvash — Almeida Livre. " +
-      "Confirme a licença e os créditos da tradução antes de republicar.";
-    conteudo.appendChild(credito);
-
-    passagem.replaceChildren(conteudo);
+    passagemCarregada = true;
+    $("creditoFonte").textContent =
+      "Fonte: API Midvash — Almeida Livre. Confirme a licença e os créditos antes de republicar os textos.";
+    $("creditoFonte").hidden = false;
+    atualizarEstadoSalvos();
 
   } catch (erro) {
-    if (pedido !== pedidoAtual) return;
+    if (id !== carregamentoId) return;
 
-    mostrarMensagem(
-      "Não foi possível carregar esta passagem. " +
-      "Verifique sua conexão ou tente novamente. Detalhe: " +
-      (erro.message || "erro desconhecido"),
-      "notice"
-    );
-
+    textoBiblico.replaceChildren();
+    const aviso = document.createElement("p");
+    aviso.className = "notice";
+    aviso.textContent =
+      "Não foi possível carregar a passagem. Verifique a internet ou a disponibilidade da fonte. Detalhe: "
+      + (erro.message || "erro desconhecido");
+    textoBiblico.appendChild(aviso);
   } finally {
-    if (pedido === pedidoAtual) {
-      botaoAbrir.disabled = false;
-      passagem.setAttribute("aria-busy", "false");
-      atualizarBotoesNavegacao();
-    }
+    if (id === carregamentoId) botaoAbrir.disabled = false;
   }
 }
 
+botaoAbrir.addEventListener("click", carregarPassagem);
+
 function navegarCapitulo(direcao) {
   let indice = Number(seletorLivro.value);
-  let numero = Number(seletorCapitulo.value);
+  let capitulo = Number(seletorCapitulo.value) + direcao;
 
-  numero += direcao;
-
-  if (numero < 1) {
-    if (indice === 0) {
-      numero = 1;
-    } else {
-      indice--;
-      numero = livros[indice][1];
-    }
-  } else if (numero > livros[indice][1]) {
-    if (indice >= livros.length - 1) {
-      numero = livros[indice][1];
-    } else {
-      indice++;
-      numero = 1;
-    }
+  if (capitulo < 1) {
+    if (indice === 0) return;
+    indice--;
+    capitulo = livros[indice][1];
+  } else if (capitulo > livros[indice][1]) {
+    if (indice === livros.length - 1) return;
+    indice++;
+    capitulo = 1;
   }
 
   seletorLivro.value = String(indice);
   atualizarCapitulos();
-  seletorCapitulo.value = String(numero);
-  atualizarBotoesNavegacao();
+  seletorCapitulo.value = String(capitulo);
+  atualizarEstadoSalvos();
   carregarPassagem();
+}
 
-  document.getElementById("leitor").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
+$("anterior").addEventListener("click", () => navegarCapitulo(-1));
+$("proximo").addEventListener("click", () => navegarCapitulo(1));
+
+$("favoritar").addEventListener("click", () => {
+  const atual = passagemAtual();
+  const itens = lerSalvos();
+  let item = itens.find(x => x.key === atual.key);
+
+  if (!item) {
+    item = {
+      key: atual.key,
+      book: atual.book,
+      slug: atual.slug,
+      chapter: atual.chapter,
+      favorite: true,
+      note: "",
+      updatedAt: new Date().toISOString()
+    };
+    itens.unshift(item);
+  } else {
+    item.favorite = !item.favorite;
+    item.updatedAt = new Date().toISOString();
+
+    if (!item.favorite && !item.note) {
+      const index = itens.findIndex(x => x.key === atual.key);
+      itens.splice(index, 1);
+    }
+  }
+
+  if (gravarSalvos(itens)) {
+    atualizarEstadoSalvos();
+    renderizarSalvos();
+  }
+});
+
+$("salvarNota").addEventListener("click", () => {
+  const atual = passagemAtual();
+  const texto = nota.value.trim();
+  const itens = lerSalvos();
+  let item = itens.find(x => x.key === atual.key);
+
+  if (!texto) {
+    mensagemNota.textContent = "Escreva uma anotação antes de salvar.";
+    return;
+  }
+
+  if (!item) {
+    item = {
+      key: atual.key,
+      book: atual.book,
+      slug: atual.slug,
+      chapter: atual.chapter,
+      favorite: false,
+      note: "",
+      updatedAt: ""
+    };
+    itens.unshift(item);
+  }
+
+  item.note = texto;
+  item.updatedAt = new Date().toISOString();
+
+  if (gravarSalvos(itens)) {
+    mensagemNota.textContent = "Anotação salva neste aparelho!";
+    atualizarEstadoSalvos();
+    renderizarSalvos();
+  }
+});
+
+function renderizarSalvos() {
+  listaSalvos.replaceChildren();
+  const itens = lerSalvos();
+
+  if (itens.length === 0) {
+    const p = document.createElement("p");
+    p.className = "vazio";
+    p.textContent = "Você ainda não salvou favoritos ou anotações.";
+    listaSalvos.appendChild(p);
+    return;
+  }
+
+  itens.sort((a, b) => (b.updatedAt || "").localeCompare(a.updatedAt || ""));
+
+  itens.forEach(item => {
+    const caixa = document.createElement("article");
+    caixa.className = "item-salvo";
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = item.book + " " + item.chapter;
+    caixa.appendChild(titulo);
+
+    if (item.favorite) {
+      const etiqueta = document.createElement("span");
+      etiqueta.className = "etiqueta";
+      etiqueta.textContent = "★ Favorito";
+      caixa.appendChild(etiqueta);
+    }
+
+    if (item.note) {
+      const etiqueta = document.createElement("span");
+      etiqueta.className = "etiqueta";
+      etiqueta.textContent = "Anotação";
+      caixa.appendChild(etiqueta);
+
+      const textoNota = document.createElement("p");
+      textoNota.textContent = item.note;
+      caixa.appendChild(textoNota);
+    }
+
+    const botoes = document.createElement("div");
+    botoes.className = "botoes";
+
+    const abrir = document.createElement("button");
+    abrir.type = "button";
+    abrir.textContent = "Abrir passagem";
+    abrir.addEventListener("click", () => {
+      const indice = livros.findIndex(l => l[2] === item.slug);
+      if (indice < 0) return;
+
+      seletorLivro.value = String(indice);
+      atualizarCapitulos();
+      seletorCapitulo.value = String(item.chapter);
+      atualizarEstadoSalvos();
+      $("leitor").scrollIntoView({ behavior: "smooth" });
+      carregarPassagem();
+    });
+
+    const excluir = document.createElement("button");
+    excluir.type = "button";
+    excluir.className = "excluir";
+    excluir.textContent = "Excluir item";
+    excluir.addEventListener("click", () => {
+      const confirmar = window.confirm(
+        "Excluir o favorito e a anotação desta passagem?"
+      );
+      if (!confirmar) return;
+
+      const atualizados = lerSalvos().filter(x => x.key !== item.key);
+      if (gravarSalvos(atualizados)) {
+        atualizarEstadoSalvos();
+        renderizarSalvos();
+      }
+    });
+
+    botoes.append(abrir, excluir);
+    caixa.appendChild(botoes);
+    listaSalvos.appendChild(caixa);
   });
 }
 
-seletorLivro.addEventListener("change", () => {
-  atualizarCapitulos();
-});
-
-seletorCapitulo.addEventListener("change", atualizarBotoesNavegacao);
-
-botaoAbrir.addEventListener("click", carregarPassagem);
-
-botaoAnterior.addEventListener("click", () => navegarCapitulo(-1));
-botaoProximo.addEventListener("click", () => navegarCapitulo(1));
-
-document.getElementById("diminuirLetra").addEventListener("click", () => {
-  tamanhoLetra = Math.max(TAMANHO_MINIMO, tamanhoLetra - 1);
-  atualizarTamanhoLetra();
-});
-
-document.getElementById("aumentarLetra").addEventListener("click", () => {
-  tamanhoLetra = Math.min(TAMANHO_MAXIMO, tamanhoLetra + 1);
-  atualizarTamanhoLetra();
-});
-
-document.getElementById("restaurarLetra").addEventListener("click", () => {
-  tamanhoLetra = TAMANHO_PADRAO;
-  atualizarTamanhoLetra();
-});
-
-document.getElementById("irLeitor").addEventListener("click", () => {
-  document.getElementById("leitor").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
-});
+$("atualizarSalvos").addEventListener("click", renderizarSalvos);
 
 atualizarCapitulos();
-atualizarTamanhoLetra();
-atualizarBotoesNavegacao();
+atualizarEstadoSalvos();
+renderizarSalvos();
 </script>
 </body>
 </html>
