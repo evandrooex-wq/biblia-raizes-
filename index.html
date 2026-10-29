@@ -787,5 +787,275 @@ atualizarCapitulos();
 atualizarEstadoSalvos();
 renderizarSalvos();
 </script>
+  
+const materiaisEstudo = [
+  {
+    tipo: "cruzamentos",
+    titulo: "A criação e a Palavra de Deus",
+    referencias: [
+      ["Gênesis", 1, "Gênesis 1 — relato da criação"],
+      ["Salmos", 33, "Salmos 33 — criação pela palavra"],
+      ["João", 1, "João 1 — o Verbo/Logos"],
+      ["Colossenses", 1, "Colossenses 1 — Cristo e a criação"],
+      ["Hebreus", 11, "Hebreus 11 — fé e criação"]
+    ],
+    resumo:
+      "Leia esses textos lado a lado e observe como cada autor apresenta a criação. São passagens relacionadas tematicamente; compare o contexto e o propósito de cada uma.",
+    fontes: [
+      {
+        nome: "STEP Bible",
+        url: "https://www.stepbible.org/"
+      }
+    ]
+  },
+  {
+    tipo: "cruzamentos",
+    titulo: "Amor a Deus e ao próximo",
+    referencias: [
+      ["Deuteronômio", 6, "Deuteronômio 6 — amar a Deus"],
+      ["Levítico", 19, "Levítico 19 — orientações para a vida comunitária"],
+      ["Mateus", 22, "Mateus 22 — os mandamentos do amor"],
+      ["Lucas", 10, "Lucas 10 — parábola do bom samaritano"],
+      ["Romanos", 13, "Romanos 13 — amor e cumprimento da lei"]
+    ],
+    resumo:
+      "Compare os mandamentos no Antigo Testamento com sua utilização no Novo Testamento. Leia o capítulo inteiro para verificar o contexto de cada referência.",
+    fontes: [
+      {
+        nome: "Bible Odyssey",
+        url: "https://www.bibleodyssey.org/"
+      }
+    ]
+  },
+  {
+    tipo: "contexto",
+    titulo: "Como estudar o contexto histórico",
+    referencias: [
+      ["Gênesis", 1, "Gênesis 1 — literatura e visão de mundo"],
+      ["Êxodo", 1, "Êxodo 1 — Israel e o Egito na narrativa bíblica"],
+      ["Lucas", 1, "Lucas 1 — introdução e ambiente do relato"],
+      ["Atos", 17, "Atos 17 — Paulo em Atenas"]
+    ],
+    resumo:
+      "Pergunte quem fala, a quem, em qual gênero literário e em que cenário. Diferencie o que o texto afirma, o que outras fontes antigas documentam e o que permanece debatido. A arqueologia e os registros externos podem ajudar, mas nem sempre resolvem todas as questões.",
+    fontes: [
+      {
+        nome: "Cambridge University Press — história judaica e bíblica",
+        url: "https://www.cambridge.org/core/books/cambridge-guide-to-jewish-history-religion-and-culture/"
+      },
+      {
+        nome: "Oxford Academic — estudos bíblicos",
+        url: "https://academic.oup.com/edited-volume/34334"
+      }
+    ]
+  },
+  {
+    tipo: "idiomas",
+    titulo: "בְּרֵאשִׁית — Bereshit",
+    idioma: "Hebraico bíblico",
+    transliteracao: "Bereshit",
+    significado:
+      "Expressão inicial de Gênesis 1:1, tradicionalmente traduzida como “no princípio”. A construção gramatical e sua relação com a oração seguinte são discutidas em estudos de hebraico bíblico.",
+    referencias: [
+      ["Gênesis", 1, "Gênesis 1 — leia o contexto"]
+    ],
+    resumo:
+      "Observe a palavra dentro da frase e do parágrafo, em vez de atribuir a ela um significado isolado.",
+    fontes: [
+      {
+        nome: "STEP Bible — ferramentas de hebraico",
+        url: "https://www.stepbible.org/"
+      }
+    ]
+  },
+  {
+    tipo: "idiomas",
+    titulo: "רוּחַ — Ruach",
+    idioma: "Hebraico bíblico",
+    transliteracao: "Ruach",
+    significado:
+      "Palavra cujo campo de significado pode incluir vento, sopro ou espírito. A tradução adequada depende da construção e do contexto da passagem.",
+    referencias: [
+      ["Gênesis", 1, "Gênesis 1:2 — examine o contexto da palavra"]
+    ],
+    resumo:
+      "Não presuma que todas as ocorrências tenham exatamente o mesmo sentido. Compare o uso gramatical e o contexto de cada ocorrência.",
+    fontes: [
+      {
+        nome: "STEP Bible — léxico e texto original",
+        url: "https://www.stepbible.org/"
+      }
+    ]
+  },
+  {
+    tipo: "idiomas",
+    titulo: "λόγος — Logos",
+    idioma: "Grego koiné",
+    transliteracao: "Logos",
+    significado:
+      "Pode significar palavra, fala, mensagem ou discurso, entre outros usos. Em João 1, o termo aparece num contexto teológico específico; uma definição de dicionário, sozinha, não determina toda a interpretação.",
+    referencias: [
+      ["João", 1, "João 1 — leia a passagem completa"]
+    ],
+    resumo:
+      "Compare a ocorrência no texto, a gramática e o argumento do autor antes de formular uma conclusão teológica.",
+    fontes: [
+      {
+        nome: "STEP Bible — ferramentas de grego",
+        url: "https://www.stepbible.org/"
+      }
+    ]
+  }
+];
+
+function normalizarPesquisaEstudo(valor) {
+  return String(valor || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
+function criarLinkPassagemEstudo(referencia) {
+  const botao = document.createElement("button");
+  botao.type = "button";
+  botao.className = "secundario";
+  botao.textContent = referencia[2];
+
+  botao.addEventListener("click", () => {
+    const indiceLivro = livros.findIndex(
+      item => item[0] === referencia[0]
+    );
+
+    if (indiceLivro < 0) {
+      alert("Não foi possível localizar esse livro no leitor.");
+      return;
+    }
+
+    seletorLivro.value = String(indiceLivro);
+    atualizarCapitulos();
+    seletorCapitulo.value = String(referencia[1]);
+    atualizarEstadoSalvos();
+
+    document.getElementById("leitor").scrollIntoView({
+      behavior: "smooth"
+    });
+
+    carregarPassagem();
+  });
+
+  return botao;
+}
+
+function renderizarEstudo() {
+  const container = document.getElementById("resultadosEstudo");
+  const busca = normalizarPesquisaEstudo(
+    document.getElementById("buscaEstudo").value
+  );
+  const tipo = document.getElementById("tipoEstudo").value;
+
+  container.replaceChildren();
+
+  const filtrados = materiaisEstudo.filter(item => {
+    const texto = normalizarPesquisaEstudo([
+      item.titulo,
+      item.idioma || "",
+      item.transliteracao || "",
+      item.significado || "",
+      item.resumo,
+      ...(item.referencias || []).map(ref => ref.join(" "))
+    ].join(" "));
+
+    return (tipo === "todos" || item.tipo === tipo)
+      && (!busca || texto.includes(busca));
+  });
+
+  if (filtrados.length === 0) {
+    const vazio = document.createElement("p");
+    vazio.className = "vazio";
+    vazio.textContent =
+      "Nenhum material encontrado. Tente outro termo de pesquisa.";
+    container.appendChild(vazio);
+    return;
+  }
+
+  filtrados.forEach(item => {
+    const artigo = document.createElement("article");
+    artigo.className = "item-salvo";
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = item.titulo;
+    artigo.appendChild(titulo);
+
+    const etiqueta = document.createElement("span");
+    etiqueta.className = "etiqueta";
+    etiqueta.textContent = {
+      cruzamentos: "Cruzamentos bíblicos",
+      contexto: "Contexto histórico",
+      idiomas: "Idiomas originais"
+    }[item.tipo] || "Estudo";
+    artigo.appendChild(etiqueta);
+
+    if (item.idioma) {
+      const idioma = document.createElement("p");
+      idioma.textContent =
+        item.idioma + " · Transliteração: " + item.transliteracao;
+      artigo.appendChild(idioma);
+    }
+
+    if (item.significado) {
+      const significado = document.createElement("p");
+      significado.textContent = item.significado;
+      artigo.appendChild(significado);
+    }
+
+    const resumo = document.createElement("p");
+    resumo.textContent = item.resumo;
+    artigo.appendChild(resumo);
+
+    if (item.referencias && item.referencias.length) {
+      const tituloRefs = document.createElement("p");
+      const forte = document.createElement("strong");
+      forte.textContent = "Referências para comparar:";
+      tituloRefs.appendChild(forte);
+      artigo.appendChild(tituloRefs);
+
+      item.referencias.forEach(ref => {
+        artigo.appendChild(criarLinkPassagemEstudo(ref));
+      });
+    }
+
+    if (item.fontes && item.fontes.length) {
+      const fontes = document.createElement("p");
+      fontes.appendChild(document.createTextNode("Fontes para consulta: "));
+
+      item.fontes.forEach((fonte, indice) => {
+        if (indice > 0) {
+          fontes.appendChild(document.createTextNode(" · "));
+        }
+
+        const link = document.createElement("a");
+        link.href = fonte.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = fonte.nome;
+        fontes.appendChild(link);
+      });
+
+      artigo.appendChild(fontes);
+    }
+
+    container.appendChild(artigo);
+  });
+}
+
+document.getElementById("buscaEstudo")
+  .addEventListener("input", renderizarEstudo);
+
+document.getElementById("tipoEstudo")
+  .addEventListener("change", renderizarEstudo);
+
+renderizarEstudo();
+      
 </body>
 </html>
