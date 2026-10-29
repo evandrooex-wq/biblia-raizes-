@@ -230,7 +230,143 @@ document.getElementById("abrir").addEventListener("click", () => {
 
   document.getElementById("passagem").append(titulo, aviso);
 });
+
+<script>
+const livros = [
+["Gênesis",50,"genesis"],["Êxodo",40,"exodus"],
+["Levítico",27,"leviticus"],["Números",36,"numbers"],
+["Deuteronômio",34,"deuteronomy"],["Josué",24,"joshua"],
+["Juízes",21,"judges"],["Rute",4,"ruth"],
+["1 Samuel",31,"1-samuel"],["2 Samuel",24,"2-samuel"],
+["1 Reis",22,"1-kings"],["2 Reis",25,"2-kings"],
+["1 Crônicas",29,"1-chronicles"],["2 Crônicas",36,"2-chronicles"],
+["Esdras",10,"ezra"],["Neemias",13,"nehemiah"],
+["Ester",10,"esther"],["Jó",42,"job"],
+["Salmos",150,"psalms"],["Provérbios",31,"proverbs"],
+["Eclesiastes",12,"ecclesiastes"],
+["Cântico dos Cânticos",8,"song-of-solomon"],
+["Isaías",66,"isaiah"],["Jeremias",52,"jeremiah"],
+["Lamentações",5,"lamentations"],["Ezequiel",48,"ezekiel"],
+["Daniel",12,"daniel"],["Oseias",14,"hosea"],["Joel",3,"joel"],
+["Amós",9,"amos"],["Obadias",1,"obadiah"],["Jonas",4,"jonah"],
+["Miqueias",7,"micah"],["Naum",3,"nahum"],
+["Habacuque",3,"habakkuk"],["Sofonias",3,"zephaniah"],
+["Ageu",2,"haggai"],["Zacarias",14,"zechariah"],
+["Malaquias",4,"malachi"],["Mateus",28,"matthew"],
+["Marcos",16,"mark"],["Lucas",24,"luke"],["João",21,"john"],
+["Atos",28,"acts"],["Romanos",16,"romans"],
+["1 Coríntios",16,"1-corinthians"],
+["2 Coríntios",13,"2-corinthians"],["Gálatas",6,"galatians"],
+["Efésios",6,"ephesians"],["Filipenses",4,"philippians"],
+["Colossenses",4,"colossians"],
+["1 Tessalonicenses",5,"1-thessalonians"],
+["2 Tessalonicenses",3,"2-thessalonians"],
+["1 Timóteo",6,"1-timothy"],["2 Timóteo",4,"2-timothy"],
+["Tito",3,"titus"],["Filemom",1,"philemon"],
+["Hebreus",13,"hebrews"],["Tiago",5,"james"],
+["1 Pedro",5,"1-peter"],["2 Pedro",3,"2-peter"],
+["1 João",5,"1-john"],["2 João",1,"2-john"],
+["3 João",1,"3-john"],["Judas",1,"jude"],
+["Apocalipse",22,"revelation"]
+];
+
+const livro = document.getElementById("livro");
+const capitulo = document.getElementById("capitulo");
+const passagem = document.getElementById("passagem");
+const botao = document.getElementById("abrir");
+
+livros.forEach((item, indice) => {
+  const opcao = document.createElement("option");
+  opcao.value = indice;
+  opcao.textContent = item[0];
+  livro.appendChild(opcao);
+});
+
+function atualizarCapitulos() {
+  capitulo.replaceChildren();
+  const total = livros[Number(livro.value)][1];
+
+  for (let n = 1; n <= total; n++) {
+    const opcao = document.createElement("option");
+    opcao.value = n;
+    opcao.textContent = "Capítulo " + n;
+    capitulo.appendChild(opcao);
+  }
+}
+
+livro.addEventListener("change", atualizarCapitulos);
+atualizarCapitulos();
+
+botao.addEventListener("click", async () => {
+  const item = livros[Number(livro.value)];
+  const numero = Number(capitulo.value);
+
+  passagem.replaceChildren();
+  const aviso = document.createElement("p");
+  aviso.textContent = "Carregando passagem...";
+  passagem.appendChild(aviso);
+
+  botao.disabled = true;
+
+  try {
+    const url = "https://api.midvash.com/v1/almeida-livre/"
+      + item[2] + "/" + numero;
+
+    const resposta = await fetch(url);
+
+    if (!resposta.ok) {
+      throw new Error("A fonte bíblica não encontrou a passagem.");
+    }
+
+    const resultado = await resposta.json();
+    const dados = resultado.data;
+
+    if (!dados) throw new Error("Resposta sem texto bíblico.");
+
+    const titulo = document.createElement("h3");
+    titulo.textContent = item[0] + " " + numero;
+    passagem.replaceChildren(titulo);
+
+    if (Array.isArray(dados.verses) && dados.verses.length) {
+      dados.verses.forEach((versiculo, i) => {
+        const p = document.createElement("p");
+        const numeroVersiculo = document.createElement("strong");
+        numeroVersiculo.textContent = (i + 1) + " ";
+        p.append(numeroVersiculo, document.createTextNode(
+          typeof versiculo === "string"
+            ? versiculo
+            : versiculo.text || versiculo.content || ""
+        ));
+        passagem.appendChild(p);
+      });
+    } else if (dados.text) {
+      const p = document.createElement("p");
+      p.textContent = dados.text;
+      passagem.appendChild(p);
+    } else {
+      throw new Error("O formato do texto recebido é diferente do esperado.");
+    }
+
+    const credito = document.createElement("p");
+    credito.className = "notice";
+    credito.textContent =
+      "Fonte: Midvash — tradução Almeida Livre. Confirme os créditos e a licença antes de republicar.";
+    passagem.appendChild(credito);
+
+  } catch (erro) {
+    passagem.replaceChildren();
+    const p = document.createElement("p");
+    p.className = "notice";
+    p.textContent = "Não foi possível carregar os versículos. "
+      + "Confira a internet ou a disponibilidade da fonte. Detalhe: "
+      + erro.message;
+    passagem.appendChild(p);
+  } finally {
+    botao.disabled = false;
+  }
+});
 </script>
+
 
 </body>
 </html>
