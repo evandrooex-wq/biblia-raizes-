@@ -11,79 +11,218 @@
 <style>
 :root {
   --azul: #10243a;
+  --azul-claro: #1b344e;
   --dourado: #d5b56d;
   --fundo: #f4f6f8;
   --texto: #243447;
+  --leitura: 19px;
 }
-* { box-sizing: border-box; }
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 12px;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   background: var(--fundo);
   color: var(--texto);
   line-height: 1.7;
 }
+
 header {
   background: var(--azul);
   color: white;
-  padding: 28px 18px;
+  padding: 26px 16px;
   text-align: center;
 }
+
 header h1 {
   margin: 0;
   color: var(--dourado);
   letter-spacing: 2px;
+  font-size: clamp(24px, 6vw, 34px);
 }
+
+header p {
+  margin-bottom: 0;
+}
+
 nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 8px;
-  background: #1b344e;
-  padding: 12px;
+  gap: 5px;
+  background: var(--azul-claro);
+  padding: 10px;
 }
+
 nav a {
   color: white;
   text-decoration: none;
-  padding: 8px;
+  padding: 9px 12px;
+  border-radius: 7px;
 }
+
+nav a:focus-visible,
+button:focus-visible,
+select:focus-visible {
+  outline: 3px solid var(--dourado);
+  outline-offset: 3px;
+}
+
 main {
-  max-width: 850px;
+  width: 100%;
+  max-width: 900px;
   margin: auto;
-  padding: 20px;
+  padding: 16px;
 }
-.hero, .card {
+
+.hero,
+.card {
   background: white;
-  padding: 22px;
+  padding: clamp(16px, 4vw, 24px);
   border-radius: 14px;
   margin-bottom: 18px;
   box-shadow: 0 3px 12px #10243a0c;
 }
-.hero { border-top: 4px solid var(--dourado); }
-h2, h3 { color: var(--azul); }
+
+.hero {
+  border-top: 4px solid var(--dourado);
+}
+
+h2,
+h3 {
+  color: var(--azul);
+  line-height: 1.35;
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
   gap: 14px;
 }
-input, select, button {
-  width: 100%;
-  padding: 12px;
-  margin: 6px 0 14px;
-  border: 1px solid #ccd3dc;
-  border-radius: 8px;
-  font-size: 16px;
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 8px;
 }
+
+select,
+button {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px;
+  margin: 6px 0 12px;
+  border: 1px solid #ccd3dc;
+  border-radius: 9px;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+select {
+  background: white;
+  color: var(--texto);
+}
+
 button {
   background: var(--azul);
   color: white;
   border: 0;
   cursor: pointer;
+  font-weight: bold;
+  touch-action: manipulation;
 }
+
+button:hover {
+  background: #234462;
+}
+
 button:disabled {
-  opacity: .6;
-  cursor: wait;
+  opacity: .5;
+  cursor: not-allowed;
 }
+
+.botao-secundario {
+  background: #e9eef3;
+  color: var(--azul);
+  border: 1px solid #ccd3dc;
+}
+
+.botao-secundario:hover {
+  background: #dce5ed;
+}
+
+.controles-leitura {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 12px 0 18px;
+}
+
+.controles-leitura button {
+  margin: 0;
+  padding: 10px 5px;
+}
+
+.tamanho-letra {
+  text-align: center;
+  font-size: 14px;
+  color: #526171;
+  margin: 8px 0 16px;
+}
+
+.navegacao-capitulo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.navegacao-capitulo button {
+  margin: 0;
+}
+
+#passagem {
+  background: #fff;
+  border: 1px solid #e3e8ed;
+  border-radius: 12px;
+  padding: clamp(14px, 4vw, 24px);
+  overflow-wrap: anywhere;
+}
+
+#passagem h3 {
+  margin-top: 0;
+  font-size: 1.35em;
+  border-bottom: 2px solid var(--dourado);
+  padding-bottom: 12px;
+}
+
+.texto-biblico {
+  font-size: var(--leitura);
+  line-height: 1.95;
+  letter-spacing: .01em;
+}
+
+.versiculo {
+  margin: 0 0 14px;
+  padding: 0 0 12px;
+  border-bottom: 1px solid #edf0f3;
+}
+
+.numero {
+  color: #87661f;
+  font-size: .83em;
+  margin-right: 5px;
+  vertical-align: super;
+}
+
 .notice {
   background: #fff8e8;
   border-left: 4px solid var(--dourado);
@@ -91,20 +230,43 @@ button:disabled {
   border-radius: 5px;
   overflow-wrap: anywhere;
 }
-.versiculo {
-  padding: 8px 0;
-  border-bottom: 1px solid #e5e9ee;
+
+.status {
+  color: #526171;
+  font-size: 15px;
 }
-.numero {
-  color: #92712b;
-  margin-right: 6px;
-}
+
 footer {
   background: var(--azul);
   color: white;
-  padding: 22px;
+  padding: 22px 16px;
   text-align: center;
   font-size: 14px;
+}
+
+@media (max-width: 420px) {
+  main {
+    padding: 10px;
+  }
+
+  .hero,
+  .card {
+    padding: 16px;
+  }
+
+  .controles-leitura {
+    gap: 6px;
+  }
+
+  .controles-leitura button {
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 </style>
 </head>
@@ -115,7 +277,7 @@ footer {
   <p>A Palavra em suas raízes. O sentido em sua essência.</p>
 </header>
 
-<nav>
+<nav aria-label="Navegação principal">
   <a href="#inicio">Início</a>
   <a href="#leitor">Leitor</a>
   <a href="#estudo">Estudo bíblico</a>
@@ -125,13 +287,13 @@ footer {
 <main>
   <section class="hero" id="inicio">
     <h2>Conheça as Escrituras em profundidade</h2>
-    <p>Uma plataforma gratuita para leitura, pesquisa e estudo bíblico, com atenção aos idiomas originais e ao contexto de cada passagem.</p>
+    <p>Leia, pesquise e estude as passagens bíblicas com atenção ao contexto e às fontes.</p>
     <button id="irLeitor" type="button">Abrir leitor bíblico</button>
   </section>
 
   <section class="card" id="leitor">
     <h2>Leitor bíblico</h2>
-    <p>Escolha um livro e um capítulo para ler.</p>
+    <p>Escolha um livro e um capítulo para começar sua leitura.</p>
 
     <label for="livro">Livro</label>
     <select id="livro"></select>
@@ -140,8 +302,28 @@ footer {
     <select id="capitulo"></select>
 
     <button id="abrir" type="button">Abrir passagem</button>
-    <div id="passagem" aria-live="polite">
-      Selecione um livro e um capítulo.
+
+    <div class="controles-leitura" aria-label="Ajustar tamanho do texto">
+      <button id="diminuirLetra" class="botao-secundario"
+        type="button" aria-label="Diminuir tamanho da letra">A− Menor</button>
+      <button id="restaurarLetra" class="botao-secundario"
+        type="button">A Restaurar</button>
+      <button id="aumentarLetra" class="botao-secundario"
+        type="button" aria-label="Aumentar tamanho da letra">A+ Maior</button>
+    </div>
+
+    <p id="indicadorLetra" class="tamanho-letra" aria-live="polite">
+      Tamanho da letra: 19 px
+    </p>
+
+    <div id="passagem" aria-live="polite" aria-busy="false">
+      <p>Selecione um livro e um capítulo para começar.</p>
+    </div>
+
+    <div class="navegacao-capitulo">
+      <button id="anterior" class="botao-secundario"
+        type="button" disabled>← Capítulo anterior</button>
+      <button id="proximo" type="button" disabled>Próximo capítulo →</button>
     </div>
   </section>
 
@@ -160,15 +342,15 @@ footer {
     </article>
     <article class="card">
       <h3>Contexto e estudo</h3>
-      <p>Estude o contexto histórico, literário e diferentes interpretações.</p>
+      <p>Estude contexto histórico, literário e diferentes interpretações.</p>
     </article>
   </section>
 
   <section class="card" id="projeto">
     <h2>Sobre o Bíblia Raízes</h2>
-    <p>Nosso objetivo é disponibilizar recursos para estudar a Bíblia com responsabilidade, transparência e respeito às fontes.</p>
+    <p>Um projeto para estudar a Bíblia com responsabilidade, transparência e respeito às fontes.</p>
     <div class="notice">
-      O leitor utiliza uma fonte externa. A disponibilidade e a licença dos textos precisam ser confirmadas.
+      O leitor consulta uma fonte externa. A disponibilidade da API e a licença dos textos precisam ser confirmadas.
     </div>
   </section>
 </main>
@@ -222,7 +404,15 @@ const livros = [
 const seletorLivro = document.getElementById("livro");
 const seletorCapitulo = document.getElementById("capitulo");
 const passagem = document.getElementById("passagem");
-const botao = document.getElementById("abrir");
+const botaoAbrir = document.getElementById("abrir");
+const botaoAnterior = document.getElementById("anterior");
+const botaoProximo = document.getElementById("proximo");
+
+const TAMANHO_PADRAO = 19;
+const TAMANHO_MINIMO = 14;
+const TAMANHO_MAXIMO = 30;
+let tamanhoLetra = TAMANHO_PADRAO;
+let pedidoAtual = 0;
 
 livros.forEach((item, indice) => {
   const opcao = document.createElement("option");
@@ -232,9 +422,11 @@ livros.forEach((item, indice) => {
 });
 
 function atualizarCapitulos() {
-  seletorCapitulo.replaceChildren();
   const indice = Number(seletorLivro.value);
   const total = livros[indice][1];
+  const capituloAnteriorSelecionado = Number(seletorCapitulo.value) || 1;
+
+  seletorCapitulo.replaceChildren();
 
   for (let n = 1; n <= total; n++) {
     const opcao = document.createElement("option");
@@ -242,16 +434,46 @@ function atualizarCapitulos() {
     opcao.textContent = "Capítulo " + n;
     seletorCapitulo.appendChild(opcao);
   }
+
+  seletorCapitulo.value = String(
+    Math.min(capituloAnteriorSelecionado, total)
+  );
+  atualizarBotoesNavegacao();
 }
 
-seletorLivro.addEventListener("change", atualizarCapitulos);
-atualizarCapitulos();
+function atualizarBotoesNavegacao() {
+  const indice = Number(seletorLivro.value);
+  const numero = Number(seletorCapitulo.value);
 
-document.getElementById("irLeitor").addEventListener("click", () => {
-  document.getElementById("leitor").scrollIntoView({behavior:"smooth"});
-});
+  botaoAnterior.disabled = indice === 0 && numero === 1;
+  botaoProximo.disabled =
+    indice === livros.length - 1 &&
+    numero === livros[livros.length - 1][1];
+}
 
-function adicionarVersiculo(numero, texto) {
+function atualizarTamanhoLetra() {
+  document.documentElement.style.setProperty(
+    "--leitura", tamanhoLetra + "px"
+  );
+
+  document.getElementById("indicadorLetra").textContent =
+    "Tamanho da letra: " + tamanhoLetra + " px";
+
+  document.getElementById("diminuirLetra").disabled =
+    tamanhoLetra <= TAMANHO_MINIMO;
+  document.getElementById("aumentarLetra").disabled =
+    tamanhoLetra >= TAMANHO_MAXIMO;
+}
+
+function mostrarMensagem(mensagem, classe = "status") {
+  passagem.replaceChildren();
+  const p = document.createElement("p");
+  p.className = classe;
+  p.textContent = mensagem;
+  passagem.appendChild(p);
+}
+
+function adicionarVersiculo(numero, texto, container) {
   if (texto === undefined || texto === null || texto === "") return;
 
   const paragrafo = document.createElement("p");
@@ -259,24 +481,27 @@ function adicionarVersiculo(numero, texto) {
 
   const numeroElemento = document.createElement("strong");
   numeroElemento.className = "numero";
-  numeroElemento.textContent = numero + ".";
+  numeroElemento.textContent = String(numero);
 
   paragrafo.append(
     numeroElemento,
     document.createTextNode(" " + String(texto))
   );
-  passagem.appendChild(paragrafo);
+  container.appendChild(paragrafo);
 }
 
-function exibirTexto(dados) {
+function exibirTexto(dados, container) {
   if (Array.isArray(dados)) {
-    dados.forEach((v, i) => {
-      if (typeof v === "string") {
-        adicionarVersiculo(i + 1, v);
-      } else if (v && typeof v === "object") {
+    dados.forEach((versiculo, indice) => {
+      if (typeof versiculo === "string") {
+        adicionarVersiculo(indice + 1, versiculo, container);
+      } else if (versiculo && typeof versiculo === "object") {
         adicionarVersiculo(
-          v.verse ?? v.verse_number ?? v.number ?? i + 1,
-          v.text ?? v.content ?? v.verse_text ?? ""
+          versiculo.verse ?? versiculo.verse_number ??
+          versiculo.number ?? indice + 1,
+          versiculo.text ?? versiculo.content ??
+          versiculo.verse_text ?? "",
+          container
         );
       }
     });
@@ -284,44 +509,47 @@ function exibirTexto(dados) {
   }
 
   if (!dados || typeof dados !== "object") {
-    throw new Error("Formato de resposta não reconhecido.");
+    throw new Error("Formato da resposta não reconhecido.");
   }
 
   if (Array.isArray(dados.verses)) {
-    exibirTexto(dados.verses);
+    exibirTexto(dados.verses, container);
     return;
   }
 
   if (Array.isArray(dados.data)) {
-    exibirTexto(dados.data);
+    exibirTexto(dados.data, container);
     return;
   }
 
   if (dados.verse && dados.text) {
-    adicionarVersiculo(dados.verse, dados.text);
+    adicionarVersiculo(dados.verse, dados.text, container);
     return;
   }
 
   if (dados.text || dados.content || dados.verse_text) {
     adicionarVersiculo(
       dados.verse ?? dados.verse_number ?? 1,
-      dados.text ?? dados.content ?? dados.verse_text
+      dados.text ?? dados.content ?? dados.verse_text,
+      container
     );
     return;
   }
 
-  throw new Error("A fonte não retornou versículos em formato reconhecido.");
+  throw new Error("Nenhum versículo foi recebido em formato reconhecido.");
 }
 
-botao.addEventListener("click", async () => {
-  const item = livros[Number(seletorLivro.value)];
+async function carregarPassagem() {
+  const pedido = ++pedidoAtual;
+  const indice = Number(seletorLivro.value);
   const numero = Number(seletorCapitulo.value);
+  const item = livros[indice];
 
-  passagem.replaceChildren();
-  const carregando = document.createElement("p");
-  carregando.textContent = "Carregando passagem...";
-  passagem.appendChild(carregando);
-  botao.disabled = true;
+  botaoAbrir.disabled = true;
+  botaoAnterior.disabled = true;
+  botaoProximo.disabled = true;
+  passagem.setAttribute("aria-busy", "true");
+  mostrarMensagem("Carregando " + item[0] + " " + numero + "...");
 
   try {
     const url = "https://api.midvash.com/v1/almeida-livre/"
@@ -330,44 +558,128 @@ botao.addEventListener("click", async () => {
     const resposta = await fetch(url);
 
     if (!resposta.ok) {
-      throw new Error("Erro HTTP " + resposta.status);
+      throw new Error("Erro HTTP " + resposta.status + ".");
     }
 
     const resultado = await resposta.json();
+
+    if (pedido !== pedidoAtual) return;
+
     const dados = resultado.data ?? resultado;
-
-    passagem.replaceChildren();
-
     const titulo = document.createElement("h3");
     titulo.textContent = item[0] + " " + numero;
-    passagem.appendChild(titulo);
 
-    exibirTexto(dados);
+    const conteudo = document.createElement("div");
+    conteudo.className = "texto-biblico";
+    conteudo.appendChild(titulo);
 
-    if (passagem.querySelectorAll(".versiculo").length === 0) {
-      throw new Error("Nenhum versículo foi recebido.");
+    const versiculos = document.createElement("div");
+    exibirTexto(dados, versiculos);
+
+    if (!versiculos.querySelector(".versiculo")) {
+      throw new Error("A resposta não contém versículos para mostrar.");
     }
+
+    conteudo.appendChild(versiculos);
 
     const credito = document.createElement("p");
     credito.className = "notice";
     credito.textContent =
-      "Fonte consultada: API Midvash — Almeida Livre. Verifique a licença e os créditos da tradução.";
-    passagem.appendChild(credito);
+      "Fonte consultada: API Midvash — Almeida Livre. " +
+      "Confirme a licença e os créditos da tradução antes de republicar.";
+    conteudo.appendChild(credito);
+
+    passagem.replaceChildren(conteudo);
 
   } catch (erro) {
-    passagem.replaceChildren();
+    if (pedido !== pedidoAtual) return;
 
-    const aviso = document.createElement("p");
-    aviso.className = "notice";
-    aviso.textContent =
-      "Não foi possível carregar a passagem. Verifique a conexão e a disponibilidade da fonte. Detalhe: "
-      + (erro.message || "erro desconhecido");
-    passagem.appendChild(aviso);
+    mostrarMensagem(
+      "Não foi possível carregar esta passagem. " +
+      "Verifique sua conexão ou tente novamente. Detalhe: " +
+      (erro.message || "erro desconhecido"),
+      "notice"
+    );
 
   } finally {
-    botao.disabled = false;
+    if (pedido === pedidoAtual) {
+      botaoAbrir.disabled = false;
+      passagem.setAttribute("aria-busy", "false");
+      atualizarBotoesNavegacao();
+    }
   }
+}
+
+function navegarCapitulo(direcao) {
+  let indice = Number(seletorLivro.value);
+  let numero = Number(seletorCapitulo.value);
+
+  numero += direcao;
+
+  if (numero < 1) {
+    if (indice === 0) {
+      numero = 1;
+    } else {
+      indice--;
+      numero = livros[indice][1];
+    }
+  } else if (numero > livros[indice][1]) {
+    if (indice >= livros.length - 1) {
+      numero = livros[indice][1];
+    } else {
+      indice++;
+      numero = 1;
+    }
+  }
+
+  seletorLivro.value = String(indice);
+  atualizarCapitulos();
+  seletorCapitulo.value = String(numero);
+  atualizarBotoesNavegacao();
+  carregarPassagem();
+
+  document.getElementById("leitor").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+seletorLivro.addEventListener("change", () => {
+  atualizarCapitulos();
 });
+
+seletorCapitulo.addEventListener("change", atualizarBotoesNavegacao);
+
+botaoAbrir.addEventListener("click", carregarPassagem);
+
+botaoAnterior.addEventListener("click", () => navegarCapitulo(-1));
+botaoProximo.addEventListener("click", () => navegarCapitulo(1));
+
+document.getElementById("diminuirLetra").addEventListener("click", () => {
+  tamanhoLetra = Math.max(TAMANHO_MINIMO, tamanhoLetra - 1);
+  atualizarTamanhoLetra();
+});
+
+document.getElementById("aumentarLetra").addEventListener("click", () => {
+  tamanhoLetra = Math.min(TAMANHO_MAXIMO, tamanhoLetra + 1);
+  atualizarTamanhoLetra();
+});
+
+document.getElementById("restaurarLetra").addEventListener("click", () => {
+  tamanhoLetra = TAMANHO_PADRAO;
+  atualizarTamanhoLetra();
+});
+
+document.getElementById("irLeitor").addEventListener("click", () => {
+  document.getElementById("leitor").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+});
+
+atualizarCapitulos();
+atualizarTamanhoLetra();
+atualizarBotoesNavegacao();
 </script>
 </body>
 </html>
