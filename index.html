@@ -5,8 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#10243a">
-<meta name="description" content="Bíblia Raízes: projeto gratuito para leitura e estudo das Escrituras.">
+<meta name="description" content="Bíblia Raízes: leitura e estudo das Escrituras.">
 <title>Bíblia Raízes</title>
+
 <style>
 :root {
   --azul: #10243a;
@@ -20,7 +21,7 @@ body {
   font-family: Arial, sans-serif;
   background: var(--fundo);
   color: var(--texto);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 header {
   background: var(--azul);
@@ -33,7 +34,6 @@ header h1 {
   color: var(--dourado);
   letter-spacing: 2px;
 }
-header p { margin-bottom: 0; }
 nav {
   display: flex;
   flex-wrap: wrap;
@@ -80,12 +80,24 @@ button {
   border: 0;
   cursor: pointer;
 }
-button:hover { background: #234462; }
+button:disabled {
+  opacity: .6;
+  cursor: wait;
+}
 .notice {
   background: #fff8e8;
   border-left: 4px solid var(--dourado);
   padding: 12px;
   border-radius: 5px;
+  overflow-wrap: anywhere;
+}
+.versiculo {
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e9ee;
+}
+.numero {
+  color: #92712b;
+  margin-right: 6px;
 }
 footer {
   background: var(--azul);
@@ -94,11 +106,10 @@ footer {
   text-align: center;
   font-size: 14px;
 }
-footer a { color: var(--dourado); }
 </style>
 </head>
-<body>
 
+<body>
 <header>
   <h1>BÍBLIA RAÍZES</h1>
   <p>A Palavra em suas raízes. O sentido em sua essência.</p>
@@ -115,14 +126,12 @@ footer a { color: var(--dourado); }
   <section class="hero" id="inicio">
     <h2>Conheça as Escrituras em profundidade</h2>
     <p>Uma plataforma gratuita para leitura, pesquisa e estudo bíblico, com atenção aos idiomas originais e ao contexto de cada passagem.</p>
-    <button onclick="document.getElementById('leitor').scrollIntoView({behavior:'smooth'})">
-      Abrir leitor bíblico
-    </button>
+    <button id="irLeitor" type="button">Abrir leitor bíblico</button>
   </section>
 
   <section class="card" id="leitor">
     <h2>Leitor bíblico</h2>
-    <p>Escolha um livro e um capítulo para preparar sua leitura.</p>
+    <p>Escolha um livro e um capítulo para ler.</p>
 
     <label for="livro">Livro</label>
     <select id="livro"></select>
@@ -130,9 +139,9 @@ footer a { color: var(--dourado); }
     <label for="capitulo">Capítulo</label>
     <select id="capitulo"></select>
 
-    <button id="abrir">Abrir passagem</button>
+    <button id="abrir" type="button">Abrir passagem</button>
     <div id="passagem" aria-live="polite">
-      Selecione uma passagem acima.
+      Selecione um livro e um capítulo.
     </div>
   </section>
 
@@ -151,87 +160,27 @@ footer a { color: var(--dourado); }
     </article>
     <article class="card">
       <h3>Contexto e estudo</h3>
-      <p>Estude contexto histórico, literário e diferentes interpretações.</p>
+      <p>Estude o contexto histórico, literário e diferentes interpretações.</p>
     </article>
   </section>
 
   <section class="card" id="projeto">
     <h2>Sobre o Bíblia Raízes</h2>
-    <p>Nosso objetivo é disponibilizar gratuitamente recursos para estudar a Bíblia com responsabilidade, transparência e respeito às fontes.</p>
+    <p>Nosso objetivo é disponibilizar recursos para estudar a Bíblia com responsabilidade, transparência e respeito às fontes.</p>
     <div class="notice">
-      <strong>Versão inicial:</strong> o leitor ainda não está conectado a uma base completa de textos bíblicos. Nenhuma passagem de demonstração deve ser tratada como uma Bíblia completa.
+      O leitor utiliza uma fonte externa. A disponibilidade e a licença dos textos precisam ser confirmadas.
     </div>
   </section>
 </main>
 
 <footer>
   <p>Bíblia Raízes · Projeto em desenvolvimento</p>
-  <p>Textos, fontes, licenças e créditos serão identificados antes da publicação completa.</p>
+  <p>Fontes, licenças e créditos devem ser confirmados antes da publicação completa.</p>
 </footer>
 
 <script>
-const livros = [
-["Gênesis",50],["Êxodo",40],["Levítico",27],["Números",36],
-["Deuteronômio",34],["Josué",24],["Juízes",21],["Rute",4],
-["1 Samuel",31],["2 Samuel",24],["1 Reis",22],["2 Reis",25],
-["1 Crônicas",29],["2 Crônicas",36],["Esdras",10],["Neemias",13],
-["Ester",10],["Jó",42],["Salmos",150],["Provérbios",31],
-["Eclesiastes",12],["Cântico dos Cânticos",8],["Isaías",66],
-["Jeremias",52],["Lamentações",5],["Ezequiel",48],["Daniel",12],
-["Oseias",14],["Joel",3],["Amós",9],["Obadias",1],["Jonas",4],
-["Miqueias",7],["Naum",3],["Habacuque",3],["Sofonias",3],
-["Ageu",2],["Zacarias",14],["Malaquias",4],["Mateus",28],
-["Marcos",16],["Lucas",24],["João",21],["Atos",28],
-["Romanos",16],["1 Coríntios",16],["2 Coríntios",13],["Gálatas",6],
-["Efésios",6],["Filipenses",4],["Colossenses",4],
-["1 Tessalonicenses",5],["2 Tessalonicenses",3],
-["1 Timóteo",6],["2 Timóteo",4],["Tito",3],["Filemom",1],
-["Hebreus",13],["Tiago",5],["1 Pedro",5],["2 Pedro",3],
-["1 João",5],["2 João",1],["3 João",1],["Judas",1],["Apocalipse",22]
-];
+"use strict";
 
-const livro = document.getElementById("livro");
-const capitulo = document.getElementById("capitulo");
-
-livros.forEach((item, indice) => {
-  const opcao = document.createElement("option");
-  opcao.value = indice;
-  opcao.textContent = item[0];
-  livro.appendChild(opcao);
-});
-
-function atualizarCapitulos() {
-  capitulo.innerHTML = "";
-  const total = livros[Number(livro.value)][1];
-
-  for (let n = 1; n <= total; n++) {
-    const opcao = document.createElement("option");
-    opcao.value = n;
-    opcao.textContent = "Capítulo " + n;
-    capitulo.appendChild(opcao);
-  }
-}
-
-livro.addEventListener("change", atualizarCapitulos);
-atualizarCapitulos();
-
-document.getElementById("abrir").addEventListener("click", () => {
-  const nome = livros[Number(livro.value)][0];
-  const numero = capitulo.value;
-
-  document.getElementById("passagem").innerHTML = "";
-
-  const titulo = document.createElement("h3");
-  titulo.textContent = nome + " " + numero;
-
-  const aviso = document.createElement("p");
-  aviso.textContent =
-    "O endereço da passagem está selecionado. O texto bíblico será exibido quando conectarmos uma fonte autorizada.";
-
-  document.getElementById("passagem").append(titulo, aviso);
-});
-
-<script>
 const livros = [
 ["Gênesis",50,"genesis"],["Êxodo",40,"exodus"],
 ["Levítico",27,"leviticus"],["Números",36,"numbers"],
@@ -270,118 +219,155 @@ const livros = [
 ["Apocalipse",22,"revelation"]
 ];
 
-const livro = document.getElementById("livro");
-const capitulo = document.getElementById("capitulo");
+const seletorLivro = document.getElementById("livro");
+const seletorCapitulo = document.getElementById("capitulo");
 const passagem = document.getElementById("passagem");
 const botao = document.getElementById("abrir");
 
 livros.forEach((item, indice) => {
   const opcao = document.createElement("option");
-  opcao.value = indice;
+  opcao.value = String(indice);
   opcao.textContent = item[0];
-  livro.appendChild(opcao);
+  seletorLivro.appendChild(opcao);
 });
 
 function atualizarCapitulos() {
-  capitulo.replaceChildren();
-  const total = livros[Number(livro.value)][1];
+  seletorCapitulo.replaceChildren();
+  const indice = Number(seletorLivro.value);
+  const total = livros[indice][1];
 
   for (let n = 1; n <= total; n++) {
     const opcao = document.createElement("option");
-    opcao.value = n;
+    opcao.value = String(n);
     opcao.textContent = "Capítulo " + n;
-    capitulo.appendChild(opcao);
+    seletorCapitulo.appendChild(opcao);
   }
 }
 
-livro.addEventListener("change", atualizarCapitulos);
+seletorLivro.addEventListener("change", atualizarCapitulos);
 atualizarCapitulos();
 
+document.getElementById("irLeitor").addEventListener("click", () => {
+  document.getElementById("leitor").scrollIntoView({behavior:"smooth"});
+});
+
+function adicionarVersiculo(numero, texto) {
+  if (texto === undefined || texto === null || texto === "") return;
+
+  const paragrafo = document.createElement("p");
+  paragrafo.className = "versiculo";
+
+  const numeroElemento = document.createElement("strong");
+  numeroElemento.className = "numero";
+  numeroElemento.textContent = numero + ".";
+
+  paragrafo.append(
+    numeroElemento,
+    document.createTextNode(" " + String(texto))
+  );
+  passagem.appendChild(paragrafo);
+}
+
+function exibirTexto(dados) {
+  if (Array.isArray(dados)) {
+    dados.forEach((v, i) => {
+      if (typeof v === "string") {
+        adicionarVersiculo(i + 1, v);
+      } else if (v && typeof v === "object") {
+        adicionarVersiculo(
+          v.verse ?? v.verse_number ?? v.number ?? i + 1,
+          v.text ?? v.content ?? v.verse_text ?? ""
+        );
+      }
+    });
+    return;
+  }
+
+  if (!dados || typeof dados !== "object") {
+    throw new Error("Formato de resposta não reconhecido.");
+  }
+
+  if (Array.isArray(dados.verses)) {
+    exibirTexto(dados.verses);
+    return;
+  }
+
+  if (Array.isArray(dados.data)) {
+    exibirTexto(dados.data);
+    return;
+  }
+
+  if (dados.verse && dados.text) {
+    adicionarVersiculo(dados.verse, dados.text);
+    return;
+  }
+
+  if (dados.text || dados.content || dados.verse_text) {
+    adicionarVersiculo(
+      dados.verse ?? dados.verse_number ?? 1,
+      dados.text ?? dados.content ?? dados.verse_text
+    );
+    return;
+  }
+
+  throw new Error("A fonte não retornou versículos em formato reconhecido.");
+}
+
 botao.addEventListener("click", async () => {
-  const item = livros[Number(livro.value)];
-  const numero = Number(capitulo.value);
+  const item = livros[Number(seletorLivro.value)];
+  const numero = Number(seletorCapitulo.value);
 
   passagem.replaceChildren();
-  const aviso = document.createElement("p");
-  aviso.textContent = "Carregando passagem...";
-  passagem.appendChild(aviso);
-
+  const carregando = document.createElement("p");
+  carregando.textContent = "Carregando passagem...";
+  passagem.appendChild(carregando);
   botao.disabled = true;
 
   try {
     const url = "https://api.midvash.com/v1/almeida-livre/"
-      + item[2] + "/" + numero;
+      + encodeURIComponent(item[2]) + "/" + numero;
 
     const resposta = await fetch(url);
 
     if (!resposta.ok) {
-      throw new Error("A fonte bíblica não encontrou a passagem.");
+      throw new Error("Erro HTTP " + resposta.status);
     }
 
     const resultado = await resposta.json();
-    const dados = resultado.data;
+    const dados = resultado.data ?? resultado;
 
-    if (!dados) throw new Error("Resposta sem texto bíblico.");
+    passagem.replaceChildren();
 
     const titulo = document.createElement("h3");
     titulo.textContent = item[0] + " " + numero;
-    passagem.replaceChildren(titulo);
+    passagem.appendChild(titulo);
 
-    if (dados.verse && dados.text) {
-  const p = document.createElement("p");
-  const numeroVersiculo = document.createElement("strong");
-  numeroVersiculo.textContent = dados.verse + " ";
-  p.append(
-    numeroVersiculo,
-    document.createTextNode(dados.text)
-  );
-  passagem.appendChild(p);
+    exibirTexto(dados);
 
-} else if (Array.isArray(dados.verses) && dados.verses.length) {
-  dados.verses.forEach((versiculo, i) => {
-    const p = document.createElement("p");
-    const numeroVersiculo = document.createElement("strong");
-    numeroVersiculo.textContent = (i + 1) + " ";
-    p.append(
-      numeroVersiculo,
-      document.createTextNode(
-        typeof versiculo === "string"
-          ? versiculo
-          : versiculo.text || versiculo.content || ""
-      )
-    );
-    passagem.appendChild(p);
-  });
-
-} else if (dados.text) {
-  const p = document.createElement("p");
-  p.textContent = dados.text;
-  passagem.appendChild(p);
-
-} else {
-  throw new Error("Nenhum texto bíblico encontrado.");
-}
+    if (passagem.querySelectorAll(".versiculo").length === 0) {
+      throw new Error("Nenhum versículo foi recebido.");
+    }
 
     const credito = document.createElement("p");
     credito.className = "notice";
     credito.textContent =
-      "Fonte: Midvash — tradução Almeida Livre. Confirme os créditos e a licença antes de republicar.";
+      "Fonte consultada: API Midvash — Almeida Livre. Verifique a licença e os créditos da tradução.";
     passagem.appendChild(credito);
 
   } catch (erro) {
     passagem.replaceChildren();
-    const p = document.createElement("p");
-    p.className = "notice";
-    p.textContent = "Não foi possível carregar os versículos. "
-      + "Confira a internet ou a disponibilidade da fonte. Detalhe: "
-      + erro.message;
-    passagem.appendChild(p);
+
+    const aviso = document.createElement("p");
+    aviso.className = "notice";
+    aviso.textContent =
+      "Não foi possível carregar a passagem. Verifique a conexão e a disponibilidade da fonte. Detalhe: "
+      + (erro.message || "erro desconhecido");
+    passagem.appendChild(aviso);
+
   } finally {
     botao.disabled = false;
   }
 });
 </script>
-
-
 </body>
 </html>
