@@ -327,25 +327,40 @@ botao.addEventListener("click", async () => {
     titulo.textContent = item[0] + " " + numero;
     passagem.replaceChildren(titulo);
 
-    if (Array.isArray(dados.verses) && dados.verses.length) {
-      dados.verses.forEach((versiculo, i) => {
-        const p = document.createElement("p");
-        const numeroVersiculo = document.createElement("strong");
-        numeroVersiculo.textContent = (i + 1) + " ";
-        p.append(numeroVersiculo, document.createTextNode(
-          typeof versiculo === "string"
-            ? versiculo
-            : versiculo.text || versiculo.content || ""
-        ));
-        passagem.appendChild(p);
-      });
-    } else if (dados.text) {
-      const p = document.createElement("p");
-      p.textContent = dados.text;
-      passagem.appendChild(p);
-    } else {
-      throw new Error("O formato do texto recebido é diferente do esperado.");
-    }
+    if (dados.verse && dados.text) {
+  const p = document.createElement("p");
+  const numeroVersiculo = document.createElement("strong");
+  numeroVersiculo.textContent = dados.verse + " ";
+  p.append(
+    numeroVersiculo,
+    document.createTextNode(dados.text)
+  );
+  passagem.appendChild(p);
+
+} else if (Array.isArray(dados.verses) && dados.verses.length) {
+  dados.verses.forEach((versiculo, i) => {
+    const p = document.createElement("p");
+    const numeroVersiculo = document.createElement("strong");
+    numeroVersiculo.textContent = (i + 1) + " ";
+    p.append(
+      numeroVersiculo,
+      document.createTextNode(
+        typeof versiculo === "string"
+          ? versiculo
+          : versiculo.text || versiculo.content || ""
+      )
+    );
+    passagem.appendChild(p);
+  });
+
+} else if (dados.text) {
+  const p = document.createElement("p");
+  p.textContent = dados.text;
+  passagem.appendChild(p);
+
+} else {
+  throw new Error("Nenhum texto bíblico encontrado.");
+}
 
     const credito = document.createElement("p");
     credito.className = "notice";
