@@ -24,7 +24,89 @@ main{padding:18px 0 30px;display:grid;gap:16px}.card{background:linear-gradient(
     <div class="brand"><div class="logo" aria-hidden="true">✦</div><div><h1>Bíblia Raízes</h1><p>Leia com atenção. Estude com contexto. Crie raízes.</p><p class="creator-credit">Criador do projeto: <span>Evandro Carvalho</span></p></div></div>
     <nav aria-label="Navegação principal"><a href="#leitor">Leitor bíblico</a><a href="#salvos">Favoritos e notas</a><a href="#estudo">Centro de estudo</a><a href="#fontes">Fontes</a></nav>
   </div>
-</header>
+
+.plano30 {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.plano30-header span {
+  color: #c49a43;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.plano30-header h2 {
+  color: #c49a43;
+  font-size: 28px;
+}
+
+.plano30-painel {
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #c49a43;
+  border-radius: 14px;
+}
+
+.barra-fundo {
+  width: 100%;
+  height: 13px;
+  background: #d5d5d5;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+#progresso30 {
+  width: 0%;
+  height: 100%;
+  background: #c49a43;
+  transition: width .3s;
+}
+
+.plano30-painel button {
+  padding: 10px 15px;
+  margin: 5px;
+  border: 0;
+  border-radius: 8px;
+  background: #c49a43;
+  color: #14213d;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.dia30 {
+  border: 1px solid #c49a43;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 12px 0;
+}
+
+.dia30.concluido {
+  background: rgba(196,154,67,.12);
+}
+
+.dia30 label {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.dia30 input {
+  width: 18px;
+  height: 18px;
+  accent-color: #c49a43;
+}
+
+.dia30 p {
+  margin: 8px 0;
+}
+
+.dia30 strong {
+  color: #c49a43;
+}
+</header> 
 <main class="wrap">
   <section class="card" id="leitor">
     <div class="eyebrow">Leitura das Escrituras</div><h2>Leitor bíblico</h2>
