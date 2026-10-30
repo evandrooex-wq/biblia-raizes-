@@ -60,7 +60,22 @@ main{padding:18px 0 30px;display:grid;gap:16px}.card{background:linear-gradient(
       <li><a href="https://academic.oup.com/edited-volume/34334" target="_blank" rel="noopener noreferrer">Oxford Academic — estudos bíblicos</a> — referência acadêmica para aprofundamento.</li>
     </ul>
     <p class="notice">A versão bíblica é fornecida por um serviço externo identificado no código. A disponibilidade, licença e formato da API podem mudar. Os resumos de estudo são introdutórios; confirme interpretações no contexto literário, histórico e teológico, consultando mais de uma fonte.</p>
-  </section>
+
+<section id="plano30" class="plano30">
+  <h2>30 dias — Cristo no centro das Escrituras</h2>
+  <p>Uma jornada de leitura pelo Antigo e Novo Testamento.</p>
+
+  <div class="barra-fundo">
+    <div id="progresso30"></div>
+  </div>
+  <p id="status30">0 de 30 dias concluídos</p>
+
+  <button type="button" onclick="proximoDia30()">Próximo dia</button>
+  <button type="button" onclick="reiniciarPlano30()">Reiniciar</button>
+
+  <div id="listaPlano30"></div>
+</section>
+  </section> 
 </main>
 <footer class="wrap">Bíblia Raízes · Projeto criado por Evandro Carvalho · Projeto estático para GitHub Pages.</footer>
 <script>
